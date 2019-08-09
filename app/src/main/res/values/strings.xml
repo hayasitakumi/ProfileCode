@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Dojo2019</string>
+
+    <string name="myname">フルネーム：</string>
+    <string name="ghaccount_name">Githubアカウント名：</string>
+    <string name="twaccount_name">Twitterアカウント名：</string>
+    <string name="code_generate_text">コード生成</string>
 </resources>
