@@ -1,15 +1,13 @@
-package jp.co.cyberagent.dojo2019
+package jp.co.cyberagent.dojo2019.Fragment
 
 
 import android.content.Context
-import android.os.Bundle
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-
-
-import kotlinx.android.synthetic.main.fragment_myprofile.*
+import jp.co.cyberagent.dojo2019.Fragment.ListprofileFragment
+import jp.co.cyberagent.dojo2019.Fragment.MyprofileFragment
+import jp.co.cyberagent.dojo2019.Fragment.QRcodeFragment
 
 class TabAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
 

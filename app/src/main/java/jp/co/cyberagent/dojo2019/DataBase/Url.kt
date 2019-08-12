@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "url_table")
 class Url {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0

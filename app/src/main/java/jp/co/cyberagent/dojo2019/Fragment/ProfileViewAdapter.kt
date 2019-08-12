@@ -1,14 +1,15 @@
-package jp.co.cyberagent.dojo2019
+package jp.co.cyberagent.dojo2019.Fragment
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import jp.co.cyberagent.dojo2019.DataBase.Url
+import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.listprofile_row.view.*
 
-class  ProfileViewAdapter(val names: List<String>, val ghs: List<String>, val tws:List<String>): RecyclerView.Adapter<ProfileViewAdapter.TagRecyclerViewHolder>() {
+class  ProfileViewAdapter(val names: List<String>, val ghs: List<String>, val tws:List<String>):
+    RecyclerView.Adapter<ProfileViewAdapter.TagRecyclerViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagRecyclerViewHolder {

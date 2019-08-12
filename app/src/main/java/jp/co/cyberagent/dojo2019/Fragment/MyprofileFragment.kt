@@ -1,20 +1,16 @@
-package jp.co.cyberagent.dojo2019
+package jp.co.cyberagent.dojo2019.Fragment
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.room.Room
-import jp.co.cyberagent.dojo2019.DataBase.AppDatabase
-import jp.co.cyberagent.dojo2019.DataBase.MyProfile
-import jp.co.cyberagent.dojo2019.DataBase.Url
-import kotlinx.android.synthetic.main.fragment_listprofile.*
+import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
+import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.fragment_myprofile.*
-import java.util.*
 import kotlin.concurrent.thread
 
 class MyprofileFragment : Fragment() {
@@ -22,27 +18,15 @@ class MyprofileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val db =
-            Room.databaseBuilder(getActivity()!!.getApplicationContext(), AppDatabase::class.java, "database").build()
-
-        val my_profile = MyProfile()
-
-
-        db.myprofileDao().getAll().observe(this, androidx.lifecycle.Observer {
-            it.forEach{
-                Log.d("TAG", "${it.myName} / ${it.ghAccount} / ${it.twAccount}")
-            }
-        })
-
-        save_button.setOnClickListener {
-            my_profile.myName = view.findViewById<EditText>(R.id.myname_text).text.toString()
-            my_profile.ghAccount = view.findViewById<EditText>(R.id.ghaccount_text).text.toString()
-            my_profile.twAccount = view.findViewById<EditText>(R.id.twaccount_text).text.toString()
+//        save_button.setOnClickListener {
+//            my_profile.myName = view.findViewById<EditText>(R.id.myname_text).text.toString()
+//            my_profile.ghAccount = view.findViewById<EditText>(R.id.ghaccount_text).text.toString()
+//            my_profile.twAccount = view.findViewById<EditText>(R.id.twaccount_text).text.toString()
 
 
-            thread {
-                db.myprofileDao().insert(my_profile)
-            }
+//            thread {
+//                db.myprofileDao().insert(my_profile)
+//            }
         }
 
 //            if (it == null) {
@@ -81,7 +65,7 @@ class MyprofileFragment : Fragment() {
 //        }
 
 
-    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_myprofile, container, false)
