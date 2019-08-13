@@ -1,16 +1,19 @@
 package jp.co.cyberagent.dojo2019.Fragment
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.util.AndroidRuntimeException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
-import jp.co.cyberagent.dojo2019.DataBase.WordViewModel
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.journeyapps.barcodescanner.BarcodeEncoder
+import jp.co.cyberagent.dojo2019.DataBase.Word.WordViewModel
 import jp.co.cyberagent.dojo2019.R
+import kotlinx.android.synthetic.main.fragment_qrcode.*
 
 class QRcodeFragment : Fragment() {
 
@@ -46,27 +49,27 @@ class QRcodeFragment : Fragment() {
 //            }
 //        })
 
-//        generate_button.setOnClickListener {
-//            try {
-//                val myname = "MYNAME"
-//                val twaccount = "TWACCOUNT"
-//                val ghaccount = "GHACCOUNT"
-//                val size = 500
-//
-//                val QRurl = "ca-tech://dojo/share?iam=" + myname + "%20Kagurazaka&tw=" + twaccount + "&gh=" + ghaccount
-//
-//                val barcodeEncoder = BarcodeEncoder()
-//                //QRコードをBitmapで作成
-//                val bitmap = barcodeEncoder.encodeBitmap(QRurl, BarcodeFormat.QR_CODE, size, size)
-//
-//                //作成したQRコードを画面上に配置
-//                val imageViewQrCode = view.findViewById<View>(R.id.qrcode_imageView) as ImageView
-//                imageViewQrCode.setImageBitmap(bitmap)
-//
-//            } catch (e: WriterException) {
-//                throw AndroidRuntimeException("Barcode Error.", e)
-//            }
-//        }
+        generate_button.setOnClickListener {
+            try {
+                val myname = "林拓実"
+                val twaccount = "ツイッター"
+                val ghaccount = "github"
+                val size = 500
+
+                val QRurl = "ca-tech://dojo/share?iam=" + myname + "%20Kagurazaka&tw=" + twaccount + "&gh=" + ghaccount
+
+                val barcodeEncoder = BarcodeEncoder()
+                //QRコードをBitmapで作成
+                val bitmap = barcodeEncoder.encodeBitmap(QRurl, BarcodeFormat.QR_CODE, size, size)
+
+                //作成したQRコードを画面上に配置
+                val imageViewQrCode = view.findViewById<View>(R.id.qrcode_imageView) as ImageView
+                imageViewQrCode.setImageBitmap(bitmap)
+
+            } catch (e: WriterException) {
+                throw AndroidRuntimeException("Barcode Error.", e)
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

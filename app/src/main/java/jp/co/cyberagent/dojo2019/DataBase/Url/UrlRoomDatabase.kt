@@ -22,21 +22,17 @@ abstract class UrlRoomDatabase : RoomDatabase() {
             context: Context,
             scope: CoroutineScope
         ): UrlRoomDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     UrlRoomDatabase::class.java,
                     "url_database"
                 )
-                    // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .addCallback(UrlDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
-                // return instance
+
                 instance
             }
         }
@@ -44,14 +40,10 @@ abstract class UrlRoomDatabase : RoomDatabase() {
         private class UrlDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
-            /**
-             * Override the onOpen method to populate the database.
-             * For this sample, we clear the database every time it is created or opened.
-             */
+
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                // If you want to keep the data through app restarts,
-                // comment out the following line.
+
                 INSTANCE?.let { database ->
                     scope.launch {
                         populateDatabase(database.urlDao())

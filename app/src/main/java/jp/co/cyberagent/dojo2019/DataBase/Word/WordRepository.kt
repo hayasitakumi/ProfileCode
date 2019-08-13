@@ -1,4 +1,4 @@
-package jp.co.cyberagent.dojo2019.DataBase
+package jp.co.cyberagent.dojo2019.DataBase.Word
 
 /*
  * Copyright (C) 2017 Google Inc.
@@ -17,7 +17,6 @@ package jp.co.cyberagent.dojo2019.DataBase
  */
 
 import androidx.lifecycle.LiveData
-import androidx.annotation.WorkerThread
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.

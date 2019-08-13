@@ -1,4 +1,4 @@
-package jp.co.cyberagent.dojo2019.DataBase
+package jp.co.cyberagent.dojo2019.DataBase.Word
 
 /*
  * Copyright (C) 2017 Google Inc.

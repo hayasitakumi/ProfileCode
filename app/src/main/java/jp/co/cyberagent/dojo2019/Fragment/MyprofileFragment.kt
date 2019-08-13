@@ -18,15 +18,6 @@ class MyprofileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-//        save_button.setOnClickListener {
-//            my_profile.myName = view.findViewById<EditText>(R.id.myname_text).text.toString()
-//            my_profile.ghAccount = view.findViewById<EditText>(R.id.ghaccount_text).text.toString()
-//            my_profile.twAccount = view.findViewById<EditText>(R.id.twaccount_text).text.toString()
-
-
-//            thread {
-//                db.myprofileDao().insert(my_profile)
-//            }
         }
 
 //            if (it == null) {

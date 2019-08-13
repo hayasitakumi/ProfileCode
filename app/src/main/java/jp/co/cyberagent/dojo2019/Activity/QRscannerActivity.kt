@@ -5,14 +5,12 @@ import android.os.Bundle
 import com.google.zxing.integration.android.IntentIntegrator
 import android.widget.Toast
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
 import jp.co.cyberagent.dojo2019.DataBase.Url
 import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
-import jp.co.cyberagent.dojo2019.DataBase.WordViewModel
 import jp.co.cyberagent.dojo2019.R
-import java.util.*
 
 
 class QRscannerActivity : AppCompatActivity() {
@@ -43,7 +41,6 @@ class QRscannerActivity : AppCompatActivity() {
 
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         val intent = Intent(this, MainActivity::class.java)
-        val url = Url()
 
         if (result != null) {
             if (result.contents == null) {
@@ -52,7 +49,12 @@ class QRscannerActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
 
-                url.urlText = result.contents
+                val url = Url()
+                val str = result.contents.toString()
+                val urlstr = Uri.parse(str)
+                val test = urlstr.toString()
+                Log.d("TAG", test)
+                url.urlText = Uri.parse(result.contents.toString()).toString()
                 urlViewModel.insert(url)
                 startActivity(intent)
             }
@@ -60,6 +62,4 @@ class QRscannerActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-
 }

@@ -1,21 +1,25 @@
 package jp.co.cyberagent.dojo2019.Fragment
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
+import jp.co.cyberagent.dojo2019.Activity.MainActivity
+import jp.co.cyberagent.dojo2019.Activity.WebActivity
 import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
 import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.fragment_listprofile.*
 
-class ListprofileFragment : Fragment() {
+class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemClickListener {
 
     private lateinit var urlViewModel: UrlViewModel
 
@@ -27,55 +31,79 @@ class ListprofileFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+//        // uriに「hoge-scheme://hoge-host?id=hogehogehoge」が入る
+//        val uri = activity?.getIntent()?.data
+//        // パラメータで指定したhogehogehogeが取得できる
+//        val id = uri?.getQueryParameter("id")
+//        if (id != null) {
+//            Log.d("TAG", id)
+//        } else {
+//            Log.d("TAG", "null")
+//        }
 
         urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
 
-        urlViewModel.allUrls.observe(this, Observer { urls ->
-            if (urls != null) {
-                urls?.let {
-                    it.forEach {
-                        //                        Log.d("TAG", "${it.uid} / ${it.urlText}")
+        urlViewModel.allUrls.observe(this, Observer {
+            if (it != null) {
+                it?.let { urls ->
+                    urls.forEach { url ->
+//                        if (url != null) {
+                            if (url.uid in uids) {
+                            } else {
+                                uids.add(url.uid)
 
-                        if(it.uid in uids){}
-                        else{
-                            uids.add(it.uid)
-
-                            val separate = it.urlText?.split("ca-tech://dojo/share?iam=", "%20", "&tw=", "&gh=")
-
-                            if (separate != null) {
-                                myname.add(separate.get(1))
-                                twaccount.add(separate.get(3))
-                                ghaccount.add(separate.get(4))
+                                val separate = url.urlText?.split("ca-tech://dojo/share?iam=", "%20", "&tw=", "&gh=")
+//                                if(url != null){
+//                                    myname.add(url.urlText?.getQueryParameter("iam").toString())
+//                                    twaccount.add(url.urlText?.getQueryParameter("tw").toString())
+//                                    ghaccount.add(url.urlText?.getQueryParameter("gh").toString())
+//                                }
+                                if (separate != null) {
+                                    myname.add(separate.get(1))
+                                    twaccount.add(separate.get(3))
+                                    ghaccount.add(separate.get(4))
+                                }
                             }
-                        }
+//                        }
+
                     }
                 }
             }
-//            Log.d("TAG", "name:${myname.toString()}")
-//            Log.d("TAG", "tw:${twaccount.toString()}")
-//            Log.d("TAG", "gh:${ghaccount.toString()}")
-            profile_cardview.adapter = ProfileViewAdapter(myname, ghaccount, twaccount)
+            profile_cardview.adapter = ProfileAdapter(view.context, this, myname, ghaccount, twaccount)
             profile_cardview.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
         })
-//
-//        profile_cardview.adapter = ProfileViewAdapter(myname, ghaccount, twaccount)
-//        profile_cardview.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
-
-//        db.urlDao().getAll().observe(this, Observer<List<Url>> {
-//            // ユーザー一覧を取得した時やデータが変更された時に呼ばれる
-//            if (it != null) {
-//                // TODO ユーザー一覧をRecyclerViewなどで表示
-//
-//                it.forEach {
-//                    titles.add(it.urlText.toString())
-////                    Log.d("TAG", it.urlText)
-//                }
-//            }
-//        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_listprofile, container, false)
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Toast.makeText(view.context, "position $position was tapped", Toast.LENGTH_SHORT).show()
+
+        val strList = arrayOf(
+            "名前：" + myname.get(position),
+            "githubアカウント：" + ghaccount.get(position), "twitterアカウント：" + twaccount.get(position)
+        )
+
+        val intent = Intent(view.context, WebActivity::class.java)
+
+        // dialogの表示
+        AlertDialog.Builder(view.context) // FragmentではActivityを取得して生成
+            .setTitle("リスト選択ダイアログ")
+            .setItems(strList) { dialog, which ->
+                when (which) {
+                    1 -> {
+                        intent.putExtra("key", "https://github.com/" + ghaccount.get(position))
+                        startActivity(intent)
+                    }
+                    2 -> {
+                        intent.putExtra("key", "https://twitter.com/" + twaccount.get(position))
+                        startActivity(intent)
+                    }
+                }
+            }
+            .setPositiveButton("キャンセル", { dialog, which -> }).show()
+
     }
 }

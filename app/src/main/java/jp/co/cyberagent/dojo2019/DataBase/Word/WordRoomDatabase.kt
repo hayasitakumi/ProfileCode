@@ -1,4 +1,4 @@
-package jp.co.cyberagent.dojo2019.DataBase
+package jp.co.cyberagent.dojo2019.DataBase.Word
 
 
 /*
@@ -23,7 +23,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
@@ -54,7 +53,11 @@ abstract class WordRoomDatabase : RoomDatabase() {
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
-                    .addCallback(WordDatabaseCallback(scope))
+                    .addCallback(
+                        WordDatabaseCallback(
+                            scope
+                        )
+                    )
                     .build()
                 INSTANCE = instance
                 // return instance

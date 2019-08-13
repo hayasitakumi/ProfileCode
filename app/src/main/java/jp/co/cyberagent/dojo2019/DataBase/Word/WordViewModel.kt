@@ -1,4 +1,4 @@
-package jp.co.cyberagent.dojo2019.DataBase
+package jp.co.cyberagent.dojo2019.DataBase.Word
 
 /*
  * Copyright (C) 2017 Google Inc.
@@ -20,11 +20,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 /**
  * View Model to keep a reference to the word repository and
@@ -41,7 +37,10 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
     val allWords: LiveData<List<Word>>
 
     init {
-        val wordsDao = WordRoomDatabase.getDatabase(application, viewModelScope).wordDao()
+        val wordsDao = WordRoomDatabase.getDatabase(
+            application,
+            viewModelScope
+        ).wordDao()
         repository = WordRepository(wordsDao)
         allWords = repository.allWords
     }

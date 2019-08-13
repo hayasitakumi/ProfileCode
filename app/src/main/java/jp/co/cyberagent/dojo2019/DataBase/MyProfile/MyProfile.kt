@@ -1,10 +1,10 @@
-//package jp.co.cyberagent.dojo2019.DataBase
+//package jp.co.cyberagent.dojo2019.DataBase.MyProfile
 //
 //import androidx.room.ColumnInfo
 //import androidx.room.Entity
 //import androidx.room.PrimaryKey
 //
-//@Entity/*(primaryKeys = ["", "", ""])*/
+//@Entity(tableName = "myprofile_table")
 //class MyProfile {
 //    @PrimaryKey
 //    @ColumnInfo(name = "my_name")
