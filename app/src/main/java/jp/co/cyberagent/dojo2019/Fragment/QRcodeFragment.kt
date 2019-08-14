@@ -51,9 +51,9 @@ class QRcodeFragment : Fragment() {
 
         generate_button.setOnClickListener {
             try {
-                val myname = "ranmaru"
-                val twaccount = "syabonbubble"
-                val ghaccount = "hayasitakumi"
+                val myname = "samplename"
+                val twaccount = "twitter"
+                val ghaccount = "github"
                 val size = 500
 
                 val QRurl = Uri.Builder().scheme("ca-tech")

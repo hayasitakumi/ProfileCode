@@ -9,8 +9,8 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
-import jp.co.cyberagent.dojo2019.DataBase.Url
-import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
+import jp.co.cyberagent.dojo2019.DataBase.Profile.Profile
+import jp.co.cyberagent.dojo2019.DataBase.Profile.ProfileViewModel
 import jp.co.cyberagent.dojo2019.R
 import jp.co.cyberagent.dojo2019.Fragment.TabAdapter
 
@@ -18,13 +18,13 @@ import jp.co.cyberagent.dojo2019.Fragment.TabAdapter
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity() {
 
-private lateinit var urlViewModel: UrlViewModel
+private lateinit var urlViewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
+        urlViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
         val viewPager = findViewById<ViewPager>(R.id.main_viewPager)
         viewPager.adapter = TabAdapter(supportFragmentManager, this)
@@ -33,11 +33,11 @@ private lateinit var urlViewModel: UrlViewModel
 
         val uri = this.getIntent().data
         if (uri != null) {
-            val url = Url()
-            url.myname = Uri.parse(uri.toString()).getQueryParameter("iam")
-            url.tw = Uri.parse(uri.toString()).getQueryParameter("tw")
-            url.gh = Uri.parse(uri.toString()).getQueryParameter("gh")
-            urlViewModel.insert(url)
+            val profile = Profile()
+            profile.name = Uri.parse(uri.toString()).getQueryParameter("iam")
+            profile.tw = Uri.parse(uri.toString()).getQueryParameter("tw")
+            profile.gh = Uri.parse(uri.toString()).getQueryParameter("gh")
+            urlViewModel.insert(profile)
         }
 
 //        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)

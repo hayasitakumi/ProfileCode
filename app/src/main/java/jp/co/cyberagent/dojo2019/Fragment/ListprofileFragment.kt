@@ -13,21 +13,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import jp.co.cyberagent.dojo2019.Activity.MainActivity
 import jp.co.cyberagent.dojo2019.Activity.WebActivity
-import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
 import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.fragment_listprofile.*
-
-
-import android.content.Context
-import android.widget.TextView
-
+import jp.co.cyberagent.dojo2019.DataBase.Profile.ProfileViewModel
 
 
 class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemClickListener {
 
-    private lateinit var urlViewModel:UrlViewModel
+    private lateinit var urlViewModel: ProfileViewModel
 
 
 
@@ -39,18 +33,19 @@ class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
+        urlViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
-        urlViewModel.allUrls.observe(this, Observer {
+        urlViewModel.allProfiles.observe(this, Observer {
             if (it != null) {
-                it.let { urls ->
-                    urls.forEach { url ->
-                        if (url.uid in uids) {
+                it.let { profiles ->
+                    profiles.forEach { profile ->
+                        Log.d("TAG", "${profile.uid} / ${profile.name}")
+                        if (profile.uid in uids) {
                         } else {
-                            uids.add(url.uid)
-                            myname.add(url.myname.toString())
-                            twaccount.add(url.tw.toString())
-                            ghaccount.add(url.gh.toString())
+                            uids.add(profile.uid)
+                            myname.add(profile.name.toString())
+                            twaccount.add(profile.tw.toString())
+                            ghaccount.add(profile.gh.toString())
                         }
                     }
                 }
@@ -92,10 +87,10 @@ class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemCli
     }
 
     override fun onItemLongClick(view: View, position: Int) {
-        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
+        urlViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
         urlViewModel.delete(uids.elementAt(position))
-
+//        urlViewModel.update(position + 1, "fullname", "github", "twitter")
         Toast.makeText(view.context, "Long tapped", Toast.LENGTH_SHORT).show()
     }
 }

@@ -8,22 +8,22 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
-import jp.co.cyberagent.dojo2019.DataBase.Url
-import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
+import jp.co.cyberagent.dojo2019.DataBase.Profile.Profile
+import jp.co.cyberagent.dojo2019.DataBase.Profile.ProfileViewModel
 import jp.co.cyberagent.dojo2019.R
 
 
 class QRscannerActivity : AppCompatActivity() {
 
 
-    private lateinit var urlViewModel: UrlViewModel
+    private lateinit var urlViewModel: ProfileViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qrscanner)
 
-        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
+        urlViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
         IntentIntegrator(this).initiateScan()
     }
@@ -40,11 +40,11 @@ class QRscannerActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
 
-                val url = Url()
-                url.myname = Uri.parse(result.contents.toString()).getQueryParameter("iam")
-                url.tw = Uri.parse(result.contents.toString()).getQueryParameter("tw")
-                url.gh = Uri.parse(result.contents.toString()).getQueryParameter("gh")
-                urlViewModel.insert(url)
+                val profile = Profile()
+                profile.name = Uri.parse(result.contents.toString()).getQueryParameter("iam")
+                profile.tw = Uri.parse(result.contents.toString()).getQueryParameter("tw")
+                profile.gh = Uri.parse(result.contents.toString()).getQueryParameter("gh")
+                urlViewModel.insert(profile)
                 startActivity(intent)
             }
         } else {

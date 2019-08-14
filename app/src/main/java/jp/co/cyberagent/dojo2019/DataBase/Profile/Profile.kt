@@ -1,4 +1,4 @@
-package jp.co.cyberagent.dojo2019.DataBase
+package jp.co.cyberagent.dojo2019.DataBase.Profile
 
 import android.net.Uri
 import androidx.room.ColumnInfo
