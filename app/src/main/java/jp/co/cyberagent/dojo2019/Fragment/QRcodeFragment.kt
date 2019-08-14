@@ -51,18 +51,17 @@ class QRcodeFragment : Fragment() {
 
         generate_button.setOnClickListener {
             try {
-                val myname = "林拓実"
-                val twaccount = "ツイッター"
-                val ghaccount = "github"
+                val myname = "ranmaru"
+                val twaccount = "syabonbubble"
+                val ghaccount = "hayasitakumi"
                 val size = 500
 
-                val QRurl = "ca-tech://dojo/share?iam=" + myname + "%20Kagurazaka&tw=" + twaccount + "&gh=" + ghaccount
-
+                val QRurl = Uri.Builder().scheme("ca-tech")
+                    .authority("dojo").path("/share").appendQueryParameter("iam",myname)
+                    .appendQueryParameter("tw",twaccount).appendQueryParameter("gh",ghaccount).build().toString()
                 val barcodeEncoder = BarcodeEncoder()
-                //QRコードをBitmapで作成
                 val bitmap = barcodeEncoder.encodeBitmap(QRurl, BarcodeFormat.QR_CODE, size, size)
 
-                //作成したQRコードを画面上に配置
                 val imageViewQrCode = view.findViewById<View>(R.id.qrcode_imageView) as ImageView
                 imageViewQrCode.setImageBitmap(bitmap)
 

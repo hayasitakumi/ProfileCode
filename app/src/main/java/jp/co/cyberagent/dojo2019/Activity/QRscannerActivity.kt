@@ -16,7 +16,6 @@ import jp.co.cyberagent.dojo2019.R
 class QRscannerActivity : AppCompatActivity() {
 
 
-    private val newWordActivityRequestCode = 1
     private lateinit var urlViewModel: UrlViewModel
 
 
@@ -25,14 +24,6 @@ class QRscannerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_qrscanner)
 
         urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
-
-        urlViewModel.allUrls.observe(this, androidx.lifecycle.Observer { urls ->
-            urls.let {
-                it.forEach{
-                    Log.d("TAG", "${it.uid} / ${it.urlText}")
-                }
-            }
-        })
 
         IntentIntegrator(this).initiateScan()
     }
@@ -50,11 +41,9 @@ class QRscannerActivity : AppCompatActivity() {
                 Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
 
                 val url = Url()
-                val str = result.contents.toString()
-                val urlstr = Uri.parse(str)
-                val test = urlstr.toString()
-                Log.d("TAG", test)
-                url.urlText = Uri.parse(result.contents.toString()).toString()
+                url.myname = Uri.parse(result.contents.toString()).getQueryParameter("iam")
+                url.tw = Uri.parse(result.contents.toString()).getQueryParameter("tw")
+                url.gh = Uri.parse(result.contents.toString()).getQueryParameter("gh")
                 urlViewModel.insert(url)
                 startActivity(intent)
             }

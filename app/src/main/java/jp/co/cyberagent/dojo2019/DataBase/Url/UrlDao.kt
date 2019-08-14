@@ -11,6 +11,10 @@ interface UrlDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(url: Url)
 
+
+    @Query("DELETE FROM url_table WHERE uid IN (:urlId)")
+    suspend fun delete(vararg urlId: Int)
+
     @Query("DELETE FROM url_table")
     suspend fun deleteAll()
 }

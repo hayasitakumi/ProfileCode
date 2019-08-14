@@ -19,9 +19,16 @@ import jp.co.cyberagent.dojo2019.DataBase.UrlViewModel
 import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.fragment_listprofile.*
 
+
+import android.content.Context
+import android.widget.TextView
+
+
+
 class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemClickListener {
 
-    private lateinit var urlViewModel: UrlViewModel
+    private lateinit var urlViewModel:UrlViewModel
+
 
 
     val uids = mutableSetOf<Int>()
@@ -31,46 +38,25 @@ class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemCli
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        // uriに「hoge-scheme://hoge-host?id=hogehogehoge」が入る
-//        val uri = activity?.getIntent()?.data
-//        // パラメータで指定したhogehogehogeが取得できる
-//        val id = uri?.getQueryParameter("id")
-//        if (id != null) {
-//            Log.d("TAG", id)
-//        } else {
-//            Log.d("TAG", "null")
-//        }
 
         urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
 
         urlViewModel.allUrls.observe(this, Observer {
             if (it != null) {
-                it?.let { urls ->
+                it.let { urls ->
                     urls.forEach { url ->
-//                        if (url != null) {
-                            if (url.uid in uids) {
-                            } else {
-                                uids.add(url.uid)
-
-                                val separate = url.urlText?.split("ca-tech://dojo/share?iam=", "%20", "&tw=", "&gh=")
-//                                if(url != null){
-//                                    myname.add(url.urlText?.getQueryParameter("iam").toString())
-//                                    twaccount.add(url.urlText?.getQueryParameter("tw").toString())
-//                                    ghaccount.add(url.urlText?.getQueryParameter("gh").toString())
-//                                }
-                                if (separate != null) {
-                                    myname.add(separate.get(1))
-                                    twaccount.add(separate.get(3))
-                                    ghaccount.add(separate.get(4))
-                                }
-                            }
-//                        }
-
+                        if (url.uid in uids) {
+                        } else {
+                            uids.add(url.uid)
+                            myname.add(url.myname.toString())
+                            twaccount.add(url.tw.toString())
+                            ghaccount.add(url.gh.toString())
+                        }
                     }
                 }
             }
-            profile_cardview.adapter = ProfileAdapter(view.context, this, myname, ghaccount, twaccount)
-            profile_cardview.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
+            profile_recyclerview.adapter = ProfileAdapter(view.context, this, myname, ghaccount, twaccount)
+            profile_recyclerview.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
         })
     }
 
@@ -79,8 +65,8 @@ class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemCli
     }
 
     override fun onItemClick(view: View, position: Int) {
-        Toast.makeText(view.context, "position $position was tapped", Toast.LENGTH_SHORT).show()
-
+//        Toast.makeText(view.context, "position $position was tapped", Toast.LENGTH_SHORT).show()
+//        Log.d("TAG", uids.elementAt(position).toString())
         val strList = arrayOf(
             "名前：" + myname.get(position),
             "githubアカウント：" + ghaccount.get(position), "twitterアカウント：" + twaccount.get(position)
@@ -88,10 +74,9 @@ class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemCli
 
         val intent = Intent(view.context, WebActivity::class.java)
 
-        // dialogの表示
         AlertDialog.Builder(view.context) // FragmentではActivityを取得して生成
             .setTitle("リスト選択ダイアログ")
-            .setItems(strList) { dialog, which ->
+            .setItems(strList) { _, which ->
                 when (which) {
                     1 -> {
                         intent.putExtra("key", "https://github.com/" + ghaccount.get(position))
@@ -103,7 +88,14 @@ class ListprofileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemCli
                     }
                 }
             }
-            .setPositiveButton("キャンセル", { dialog, which -> }).show()
+            .setPositiveButton("キャンセル", { _, _ -> }).show()
+    }
 
+    override fun onItemLongClick(view: View, position: Int) {
+        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
+
+        urlViewModel.delete(uids.elementAt(position))
+
+        Toast.makeText(view.context, "Long tapped", Toast.LENGTH_SHORT).show()
     }
 }

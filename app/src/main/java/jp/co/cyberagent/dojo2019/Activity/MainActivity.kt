@@ -32,13 +32,11 @@ private lateinit var urlViewModel: UrlViewModel
         tabLayout.setupWithViewPager(viewPager)
 
         val uri = this.getIntent().data
-//        val id = uri?.getQueryParameter("tw")
         if (uri != null) {
             val url = Url()
-            val str = Uri.parse(uri.toString())
-            val urlstr = str.toString()
-            url.urlText = Uri.parse(uri.toString()).toString()
-//            Log.d("TAG", urlstr)
+            url.myname = Uri.parse(uri.toString()).getQueryParameter("iam")
+            url.tw = Uri.parse(uri.toString()).getQueryParameter("tw")
+            url.gh = Uri.parse(uri.toString()).getQueryParameter("gh")
             urlViewModel.insert(url)
         }
 

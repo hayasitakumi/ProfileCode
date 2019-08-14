@@ -10,9 +10,10 @@ import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.listprofile_row.view.*
 import org.w3c.dom.Text
 
-class  ProfileAdapter(
+class ProfileAdapter(
     val context: Context, val itemClickListener: ProfileViewHolder.ItemClickListener,
-    val names: List<String>, val ghs: List<String>, val tws:List<String>):
+    val names: List<String>, val ghs: List<String>, val tws: List<String>
+) :
     RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
 
@@ -39,6 +40,12 @@ class  ProfileAdapter(
                 itemClickListener.onItemClick(view, it.getChildAdapterPosition(view))
             }
         }
+        mView.setOnLongClickListener { view ->
+            mRecyclerView?.let {
+                itemClickListener.onItemLongClick(view, it.getChildAdapterPosition(view))
+            }
+            true
+        }
 
         return ProfileViewHolder(mView)
     }
@@ -54,15 +61,15 @@ class  ProfileAdapter(
     }
 
 
-    class ProfileViewHolder(var view: View): RecyclerView.ViewHolder(view){
+    class ProfileViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 
         val name: TextView = view.list_myname_text
-        val gh:TextView = view.list_gh_text
-        val tw:TextView = view.list_tw_text
+        val gh: TextView = view.list_gh_text
+        val tw: TextView = view.list_tw_text
 
         interface ItemClickListener {
             fun onItemClick(view: View, position: Int)
+            fun onItemLongClick(view: View, position: Int)
         }
-
     }
 }
