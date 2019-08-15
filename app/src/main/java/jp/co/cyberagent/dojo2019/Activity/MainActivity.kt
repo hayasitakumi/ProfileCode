@@ -9,8 +9,8 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
+import jp.co.cyberagent.dojo2019.DataBase.MyViewModel
 import jp.co.cyberagent.dojo2019.DataBase.Profile.Profile
-import jp.co.cyberagent.dojo2019.DataBase.Profile.ProfileViewModel
 import jp.co.cyberagent.dojo2019.R
 import jp.co.cyberagent.dojo2019.Fragment.TabAdapter
 
@@ -18,13 +18,13 @@ import jp.co.cyberagent.dojo2019.Fragment.TabAdapter
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity() {
 
-private lateinit var urlViewModel: ProfileViewModel
+private lateinit var profileViewModel: MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        urlViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        profileViewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
 
         val viewPager = findViewById<ViewPager>(R.id.main_viewPager)
         viewPager.adapter = TabAdapter(supportFragmentManager, this)
@@ -37,20 +37,8 @@ private lateinit var urlViewModel: ProfileViewModel
             profile.name = Uri.parse(uri.toString()).getQueryParameter("iam")
             profile.tw = Uri.parse(uri.toString()).getQueryParameter("tw")
             profile.gh = Uri.parse(uri.toString()).getQueryParameter("gh")
-            urlViewModel.insert(profile)
+            profileViewModel.insert(profile)
         }
-
-//        urlViewModel = ViewModelProviders.of(this).get(UrlViewModel::class.java)
-//
-//        urlViewModel.allUrls.observe(this, Observer { urls ->
-//            if (urls != null) {
-//                urls?.let {
-//                    it.forEach {
-//                        Log.d("TAG", "${it.uid} / ${it.urlText}")
-//                    }
-//                }
-//            }
-//        })
 
         main_camerabutton.setOnClickListener {
             val intent = Intent(this, QRscannerActivity::class.java)

@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.cyberagent.dojo2019.R
 import kotlinx.android.synthetic.main.listprofile_row.view.*
-import org.w3c.dom.Text
 
 class ProfileAdapter(
     val context: Context, val itemClickListener: ProfileViewHolder.ItemClickListener,
@@ -40,12 +39,6 @@ class ProfileAdapter(
                 itemClickListener.onItemClick(view, it.getChildAdapterPosition(view))
             }
         }
-        mView.setOnLongClickListener { view ->
-            mRecyclerView?.let {
-                itemClickListener.onItemLongClick(view, it.getChildAdapterPosition(view))
-            }
-            true
-        }
 
         return ProfileViewHolder(mView)
     }
@@ -69,7 +62,6 @@ class ProfileAdapter(
 
         interface ItemClickListener {
             fun onItemClick(view: View, position: Int)
-            fun onItemLongClick(view: View, position: Int)
         }
     }
 }

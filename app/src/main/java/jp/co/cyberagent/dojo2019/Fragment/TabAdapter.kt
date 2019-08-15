@@ -11,14 +11,14 @@ class TabAdapter(fm: FragmentManager, private val context: Context) : FragmentPa
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> {
-                return UserFragment()
+                return ProfileFragment()
             }
 
             1 -> {
-                return QRcodeFragment()
+                return UserFragment()
             }
             else -> {
-                return ListprofileFragment()
+                return QRcodeFragment()
             }
         }
     }
@@ -26,13 +26,13 @@ class TabAdapter(fm: FragmentManager, private val context: Context) : FragmentPa
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
             0 -> {
-                return "MY PROFILE"
+                return "PROFILE LIST"
             }
             1 -> {
-                return "MY QRCODE"
+                return "MY PROFILE"
             }
             else -> {
-                return "PROFILE LIST"
+                return "MY QRCODE"
             }
         }
     }

@@ -76,7 +76,7 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidxArchVersion"
 
-    // ViewModel Kotlin support
+    // MyViewModel Kotlin support
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
 
     // Coroutines
