@@ -1,6 +1,7 @@
 package jp.co.cyberagent.dojo2019.Fragment
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,7 @@ import kotlinx.android.synthetic.main.listprofile_row.view.*
 class ProfileAdapter(
     val context: Context, val itemClickListener: ProfileViewHolder.ItemClickListener,
     val names: List<String>, val ghs: List<String>, val tws: List<String>
-) :
-    RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
-
+) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
     private var mRecyclerView: RecyclerView? = null
 
@@ -49,7 +48,9 @@ class ProfileAdapter(
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         holder.name.text = names.get(position)
+        holder.name.setTypeface(Typeface.createFromAsset(holder.name.context.assets, "KosugiMaru-Regular.ttf"))
         holder.gh.text = ghs.get(position)
+        holder.gh.setTypeface(Typeface.createFromAsset(holder.gh.context.assets, "Sofia-Regular.ttf"))
         holder.tw.text = tws.get(position)
     }
 

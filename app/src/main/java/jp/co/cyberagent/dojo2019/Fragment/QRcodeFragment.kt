@@ -1,5 +1,6 @@
 package jp.co.cyberagent.dojo2019.Fragment
 
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.AndroidRuntimeException

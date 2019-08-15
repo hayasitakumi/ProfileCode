@@ -13,7 +13,9 @@ import jp.co.cyberagent.dojo2019.DataBase.MyViewModel
 import jp.co.cyberagent.dojo2019.DataBase.Profile.Profile
 import jp.co.cyberagent.dojo2019.R
 import jp.co.cyberagent.dojo2019.Fragment.TabAdapter
-
+import kotlinx.android.synthetic.main.listprofile_row.*
+import android.graphics.Typeface
+import kotlinx.android.synthetic.main.fragment_user.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity() {
@@ -23,12 +25,12 @@ private lateinit var profileViewModel: MyViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         profileViewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
 
-        val viewPager = findViewById<ViewPager>(R.id.main_viewPager)
+        val viewPager = main_viewPager
         viewPager.adapter = TabAdapter(supportFragmentManager, this)
-        val tabLayout = findViewById<TabLayout>(R.id.main_tabLayout)
+
+        val tabLayout = main_tabLayout
         tabLayout.setupWithViewPager(viewPager)
 
         val uri = this.getIntent().data

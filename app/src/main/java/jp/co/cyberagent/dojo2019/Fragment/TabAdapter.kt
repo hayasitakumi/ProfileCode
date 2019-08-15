@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import java.util.*
 
 class TabAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
 
@@ -24,15 +25,29 @@ class TabAdapter(fm: FragmentManager, private val context: Context) : FragmentPa
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
+        val locale = Locale.getDefault()
+        var friendText :String?
+        var profileText :String?
+        var qrcodeText :String?
+        if(locale.equals(Locale.JAPAN)){
+            friendText = "友達一覧"
+            profileText = "プロフィール"
+            qrcodeText = "QRコード"
+
+        }else{
+            friendText = "FRIEND"
+            profileText = "PROFILE"
+            qrcodeText = "QR CODE"
+        }
         when (position) {
             0 -> {
-                return "PROFILE LIST"
+                return friendText
             }
             1 -> {
-                return "MY PROFILE"
+                return profileText
             }
             else -> {
-                return "MY QRCODE"
+                return qrcodeText
             }
         }
     }
