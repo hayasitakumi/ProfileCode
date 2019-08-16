@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#8ba7d5</color>
     <color name="colorPrimaryDark">#6a8cc7</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#ffee55</color>
     <color name="colorCardBackground">#d1f1cc</color>
     <color name="cameraButtonColor">#F9DFD5</color>
     <color name="edittextColor">#595959</color>

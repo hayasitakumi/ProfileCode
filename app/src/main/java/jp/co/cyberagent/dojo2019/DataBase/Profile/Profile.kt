@@ -11,6 +11,9 @@ class Profile {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
 
+    @ColumnInfo(index = true, name = "profile_position")
+    var position: Int = 0
+
     @ColumnInfo(name = "profile_name")
     var name: String? = null
 

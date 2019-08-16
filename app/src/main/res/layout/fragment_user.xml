@@ -83,11 +83,11 @@
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_tw_edittext" android:textColor="@color/edittextColor"/>
+            app:layout_constraintTop_toBottomOf="@+id/my_tw_edittext"
+            android:textColor="@color/edittextColor"/>
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

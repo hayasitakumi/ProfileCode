@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.button.MaterialButton
 import jp.co.cyberagent.dojo2019.DataBase.MyViewModel
@@ -27,9 +28,10 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         customFont()
 
-        save_button.setOnClickListener{
+        save_button.setOnClickListener {
 
             userViewModel.delete()
+
             val input_user = User()
 
             input_user.name = my_name_edittext.text.toString()
@@ -40,7 +42,7 @@ class UserFragment : Fragment() {
         }
     }
 
-    fun customFont(){
+    fun customFont() {
         my_name_text?.setTypeface(Typeface.createFromAsset(my_name_text.context.assets, "MPLUSRounded1c-Bold.ttf"))
         my_gh_text?.setTypeface(Typeface.createFromAsset(my_gh_text.context.assets, "MPLUSRounded1c-Bold.ttf"))
         my_tw_text?.setTypeface(Typeface.createFromAsset(my_tw_text.context.assets, "MPLUSRounded1c-Bold.ttf"))

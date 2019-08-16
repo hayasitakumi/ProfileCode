@@ -36,6 +36,7 @@ private lateinit var profileViewModel: MyViewModel
         val uri = this.getIntent().data
         if (uri != null) {
             val profile = Profile()
+            profile.position = profile.uid
             profile.name = Uri.parse(uri.toString()).getQueryParameter("iam")
             profile.tw = Uri.parse(uri.toString()).getQueryParameter("tw")
             profile.gh = Uri.parse(uri.toString()).getQueryParameter("gh")

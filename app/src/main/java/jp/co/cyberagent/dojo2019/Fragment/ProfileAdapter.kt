@@ -52,6 +52,7 @@ class ProfileAdapter(
         holder.gh.text = ghs.get(position)
         holder.gh.setTypeface(Typeface.createFromAsset(holder.gh.context.assets, "Sofia-Regular.ttf"))
         holder.tw.text = tws.get(position)
+        holder.tw.setTypeface(Typeface.createFromAsset(holder.tw.context.assets, "KosugiMaru-Regular.ttf"))
     }
 
 

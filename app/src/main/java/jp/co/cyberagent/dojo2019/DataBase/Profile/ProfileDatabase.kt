@@ -1,27 +1,27 @@
-package jp.co.cyberagent.dojo2019.DataBase.User
+package jp.co.cyberagent.dojo2019.DataBase.Profile
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [User::class], version = 1)
-abstract class UserRoomDatabase : RoomDatabase() {
+@Database(entities = [Profile::class], version = 2)
+abstract class ProfileDatabase : RoomDatabase() {
 
-    abstract fun userDao(): UserDao
+    abstract fun profileDao(): ProfileDao
 
     companion object {
         @Volatile
-        private var INSTANCE: UserRoomDatabase? = null
+        private var INSTANCE: ProfileDatabase? = null
 
         fun getDatabase(
             context: Context
-        ): UserRoomDatabase {
+        ): ProfileDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    UserRoomDatabase::class.java,
-                    "user_database"
+                    ProfileDatabase::class.java,
+                    "profile_database"
                 ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
 

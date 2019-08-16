@@ -34,6 +34,7 @@ class QRscannerActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 val profile = Profile()
+                profile.position = profile.uid
                 profile.name = Uri.parse(result.contents.toString()).getQueryParameter("iam")
                 profile.tw = Uri.parse(result.contents.toString()).getQueryParameter("tw")
                 profile.gh = Uri.parse(result.contents.toString()).getQueryParameter("gh")

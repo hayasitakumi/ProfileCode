@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.roomUrlssample.Profile.ProfileRepository
 import com.example.android.roomUrlssample.User.UserRepository
 import jp.co.cyberagent.dojo2019.DataBase.Profile.Profile
-import jp.co.cyberagent.dojo2019.DataBase.Profile.ProfileRoomDatabase
+import jp.co.cyberagent.dojo2019.DataBase.Profile.ProfileDatabase
 import jp.co.cyberagent.dojo2019.DataBase.User.User
-import jp.co.cyberagent.dojo2019.DataBase.User.UserRoomDatabase
+import jp.co.cyberagent.dojo2019.DataBase.User.UserDatabase
 import kotlinx.coroutines.launch
 
 
@@ -23,11 +23,11 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
 
     init {
-        val UsersDao = UserRoomDatabase.getDatabase(application).userDao()
+        val UsersDao = UserDatabase.getDatabase(application).userDao()
         userrepository = UserRepository(UsersDao)
         allUsers = userrepository.allUsers
 
-        val ProfilesDao = ProfileRoomDatabase.getDatabase(application).profileDao()
+        val ProfilesDao = ProfileDatabase.getDatabase(application).profileDao()
         profilerepository = ProfileRepository(ProfilesDao)
         allProfiles = profilerepository.allProfiles
     }
@@ -48,6 +48,10 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     fun delete(id: Int) = viewModelScope.launch {
         profilerepository.delete(id)
+    }
+
+    fun update_position(uids: MutableSet<Int>) = viewModelScope.launch {
+        profilerepository.update_position(uids)
     }
 
 }

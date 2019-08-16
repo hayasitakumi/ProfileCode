@@ -17,6 +17,7 @@ import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import jp.co.cyberagent.dojo2019.DataBase.MyViewModel
 import jp.co.cyberagent.dojo2019.R
+import kotlinx.android.synthetic.main.fragment_qrcode.*
 
 class QRcodeFragment : Fragment() {
 
@@ -31,17 +32,23 @@ class QRcodeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         userViewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
+
         return inflater.inflate(R.layout.fragment_qrcode, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        customFont()
 
         try {
             userViewModel.allUsers.observe(this, Observer {
                 if (it != null) {
                     it.let { users ->
                         users.forEach { user ->
-                            Log.d("TAG", "${user.name}/${user.gh}/${user.tw}")
+
+                            user_myname_text.text = user.name
+                            user_gh_text.text = user.gh
+                            user_tw_text.text = user.tw
+//                            Log.d("TAG", "${user.name}/${user.gh}/${user.tw}")
                             myname = user.name.toString()
                             twaccount = user.gh.toString()
                             ghaccount = user.tw.toString()
@@ -61,5 +68,11 @@ class QRcodeFragment : Fragment() {
         } catch (e: WriterException) {
             throw AndroidRuntimeException("Barcode Error.", e)
         }
+    }
+    fun customFont(){
+        now_text?.setTypeface(Typeface.createFromAsset(now_text.context.assets, "KosugiMaru-Regular.ttf"))
+        user_myname_text?.setTypeface(Typeface.createFromAsset(user_gh_text.context.assets, "KosugiMaru-Regular.ttf"))
+        user_gh_text?.setTypeface(Typeface.createFromAsset(user_gh_text.context.assets, "Sofia-Regular.ttf"))
+        user_tw_text?.setTypeface(Typeface.createFromAsset(user_tw_text.context.assets, "KosugiMaru-Regular.ttf"))
     }
 }

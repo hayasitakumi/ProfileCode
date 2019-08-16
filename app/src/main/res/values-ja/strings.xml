@@ -10,4 +10,5 @@
     <string name="profiletwitter">twitteraccount</string>
     <string name="yourname">あなたの名前</string>
     <string name="hint">あなたのアカウント名</string>
+    <string name="nowuser">現在のユーザプロフィール</string>
 </resources>
