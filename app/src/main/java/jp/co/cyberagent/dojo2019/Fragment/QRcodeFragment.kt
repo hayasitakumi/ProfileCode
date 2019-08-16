@@ -50,8 +50,8 @@ class QRcodeFragment : Fragment() {
                             user_tw_text.text = user.tw
 //                            Log.d("TAG", "${user.name}/${user.gh}/${user.tw}")
                             myname = user.name.toString()
-                            twaccount = user.gh.toString()
-                            ghaccount = user.tw.toString()
+                            twaccount = user.tw.toString()
+                            ghaccount = user.gh.toString()
 
                             val QRurl = Uri.Builder().scheme("ca-tech")
                                 .authority("dojo").path("/share").appendQueryParameter("iam", myname)

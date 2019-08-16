@@ -130,6 +130,8 @@ class ProfileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemClickLi
 
                 }
             }
+            profile_recyclerview.adapter = ProfileAdapter(view.context, this, myname, ghaccount, twaccount)
+            profile_recyclerview.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         })
     }
 
