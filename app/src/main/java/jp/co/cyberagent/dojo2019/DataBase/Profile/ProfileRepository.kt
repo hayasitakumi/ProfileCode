@@ -17,13 +17,7 @@ class ProfileRepository(private val profileDao: ProfileDao) {
         profileDao.delete(id)
     }
 
-    suspend fun update_position(uid: MutableSet<Int>){
-        for (i in 1..2) {
-            profileDao.update_position(1, 2)
-        }
+    suspend fun update(id: Int, name: String, gh: String, tw: String){
+        profileDao.update(id, name, gh, tw)
     }
-//    suspend fun update_position()
-//    suspend fun update(id: Int, name: String, gh: String,tw: String){
-//        profileDao.update(id, name, gh, tw)
-//    }
 }

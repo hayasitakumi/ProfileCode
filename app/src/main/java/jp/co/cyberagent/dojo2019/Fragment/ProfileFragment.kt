@@ -1,5 +1,6 @@
 package jp.co.cyberagent.dojo2019.Fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Canvas
@@ -40,6 +41,7 @@ class ProfileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemClickLi
         return inflater.inflate(R.layout.fragment_listprofile, container, false)
     }
 
+    @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         profileViewModel.allProfiles.observe(this, Observer {
             if (it != null) {
@@ -58,86 +60,96 @@ class ProfileFragment : Fragment(), ProfileAdapter.ProfileViewHolder.ItemClickLi
                         }
                     }
 
-                    val itemTouchHelper = ItemTouchHelper(object :
-                        ItemTouchHelper.SimpleCallback(
-                            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                            ItemTouchHelper.RIGHT
-                        ) {
-
-                        override fun onMove(
-                            recyclerView: RecyclerView,
-                            viewHolder: RecyclerView.ViewHolder,
-                            target: RecyclerView.ViewHolder
-                        ): Boolean {
-                            val fromPosition = viewHolder?.adapterPosition ?: 0
-                            val toPosition = target?.adapterPosition ?: 0
-
-                            profile_recyclerview.adapter?.notifyItemMoved(fromPosition, toPosition)
-//                    Log.d(
-//                        "TAG",
-//                        "position: ${fromPosition}, uid:${uids.elementAt(fromPosition)}"
-//                    )
-
-                            return true
-                        }
-
-                        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                            viewHolder?.let {
-                                profileViewModel.delete(uids.elementAt(viewHolder.adapterPosition))
-                                uids.remove(viewHolder.adapterPosition)
-                                myname.removeAt(viewHolder.adapterPosition)
-                                twaccount.removeAt(viewHolder.adapterPosition)
-                                ghaccount.removeAt(viewHolder.adapterPosition)
-                                profile_recyclerview.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
-                            }
-                        }
-
-                        override fun onChildDraw(
-                            c: Canvas,
-                            recyclerView: RecyclerView,
-                            viewHolder: RecyclerView.ViewHolder,
-                            dX: Float,
-                            dY: Float,
-                            actionState: Int,
-                            isCurrentlyActive: Boolean
-                        ) {
-                            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                                val alpha = 1.0f - Math.abs(dX) / viewHolder.itemView.width
-                                viewHolder.itemView.alpha = alpha
-                                viewHolder.itemView.translationX = dX
-                            } else {
-                                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                            }
-                        }
-
-                        override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                            super.onSelectedChanged(viewHolder, actionState)
-                            if (actionState == ACTION_STATE_DRAG) {
-                                viewHolder?.itemView?.alpha = 0.5f
-                            }
-                        }
-
-                        override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-                            super.clearView(recyclerView, viewHolder)
-//                    Log.d("TAG",recyclerView.adapter?.itemCount.toString())
-//                    uids.elementAt(viewHolder.adapterPosition)
-//                    Log.d("TAG", "${uids.elementAt(viewHolder.adapterPosition)}")
-//                    profileViewModel.update_position(uids)
-                            viewHolder.itemView.alpha = 1.0f
-                        }
-                    })
-                    itemTouchHelper.attachToRecyclerView(profile_recyclerview)
-
                 }
             }
             profile_recyclerview.adapter = ProfileAdapter(view.context, this, myname, ghaccount, twaccount)
             profile_recyclerview.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         })
+
+
+        val itemTouchHelper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                ItemTouchHelper.RIGHT
+            ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder?.adapterPosition ?: 0
+                val toPosition = target?.adapterPosition ?: 0
+
+                profile_recyclerview.adapter?.notifyItemMoved(fromPosition, toPosition)
+
+                val tmpname = myname[fromPosition]
+                val tmptw = twaccount[fromPosition]
+                val tmpgh = ghaccount[fromPosition]
+
+
+
+                myname.removeAt(fromPosition)
+                myname.add(toPosition, tmpname)
+
+                twaccount.removeAt(fromPosition)
+                twaccount.add(toPosition, tmptw)
+
+                ghaccount.removeAt(fromPosition)
+                ghaccount.add(toPosition, tmpgh)
+
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                viewHolder?.let {
+                    Log.d("TAG", "${uids.elementAt(viewHolder.adapterPosition)} / ${viewHolder.adapterPosition} / ${direction}" )
+                    profileViewModel.delete(uids.elementAt(viewHolder.adapterPosition))
+                    uids.remove(viewHolder.adapterPosition)
+                    myname.removeAt(viewHolder.adapterPosition)
+                    twaccount.removeAt(viewHolder.adapterPosition)
+                    ghaccount.removeAt(viewHolder.adapterPosition)
+                    profile_recyclerview.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+                }
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    val alpha = 1.0f - Math.abs(dX) / viewHolder.itemView.width
+                    viewHolder.itemView.alpha = alpha
+                    viewHolder.itemView.translationX = dX
+                } else {
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                }
+            }
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+                if (actionState == ACTION_STATE_DRAG) {
+                    viewHolder?.itemView?.alpha = 0.5f
+                }
+            }
+
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+                super.clearView(recyclerView, viewHolder)
+                viewHolder.itemView.alpha = 1.0f
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(profile_recyclerview)
+
     }
 
     override fun onItemClick(view: View, position: Int) {
         Toast.makeText(view.context, "position $position was tapped", Toast.LENGTH_SHORT).show()
-//        Log.d("TAG", uids.elementAt(position).toString())
+        Log.d("TAG", uids.elementAt(position).toString())
         val locale = Locale.getDefault()
         val itemList = arrayOfNulls<String>(2)
         var canselText: String?

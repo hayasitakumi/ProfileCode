@@ -50,8 +50,12 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         profilerepository.delete(id)
     }
 
-    fun update_position(uids: MutableSet<Int>) = viewModelScope.launch {
-        profilerepository.update_position(uids)
+//    fun update(id: MutableSet<Int>) = viewModelScope.launch {
+//        profilerepository.update(uids)
+//    }
+
+    fun update(id: Int, name: String, gh: String, tw: String) = viewModelScope.launch{
+        profilerepository.update(id, name, gh, tw)
     }
 
 }
