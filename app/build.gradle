@@ -17,7 +17,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion '29.0.0'
     defaultConfig {
-        applicationId "jp.co.cyberagent.dojo2019"
+        applicationId "com.syabonbubble.profilecode"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1

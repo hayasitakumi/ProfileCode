@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dojo2019</string>
+    <string name="app_name">ProfileCode</string>
 
     <string name="myname">フルネーム：</string>
     <string name="ghaccount_text">Githubアカウント：</string>
