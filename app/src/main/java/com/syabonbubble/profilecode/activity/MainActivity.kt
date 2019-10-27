@@ -7,9 +7,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import com.syabonbubble.profilecode.R
-import com.syabonbubble.profilecode.DataBase.MyViewModel
-import com.syabonbubble.profilecode.DataBase.Profile.Profile
-import com.syabonbubble.profilecode.Fragment.TabAdapter
+import com.syabonbubble.profilecode.database.MyViewModel
+import com.syabonbubble.profilecode.database.profile.Profile
+import com.syabonbubble.profilecode.fragment.TabAdapter
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity() {
@@ -22,12 +22,12 @@ private lateinit var profileViewModel: MyViewModel
         profileViewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
 
         val viewPager = main_viewPager
-        viewPager.adapter = TabAdapter(supportFragmentManager, this)
+        viewPager.adapter = TabAdapter(supportFragmentManager)
 
         val tabLayout = main_tabLayout
         tabLayout.setupWithViewPager(viewPager)
 
-        val uri = this.getIntent().data
+        val uri = this.intent.data
         if (uri != null) {
             val profile = Profile()
             profile.position = profile.uid
