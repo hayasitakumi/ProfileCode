@@ -11,7 +11,7 @@ class WebActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
 
-        val intent = getIntent()
+        val intent = intent
         val url = intent.extras?.getString("key")
 
         webView.loadUrl(url)

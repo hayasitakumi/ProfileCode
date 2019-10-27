@@ -7,8 +7,8 @@ import android.widget.Toast
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
-import com.syabonbubble.profilecode.DataBase.MyViewModel
-import com.syabonbubble.profilecode.DataBase.Profile.Profile
+import com.syabonbubble.profilecode.database.MyViewModel
+import com.syabonbubble.profilecode.database.profile.Profile
 import com.syabonbubble.profilecode.R
 
 class QRscannerActivity : AppCompatActivity() {
